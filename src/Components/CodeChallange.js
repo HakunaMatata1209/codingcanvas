@@ -86,6 +86,11 @@ function CodeChallange() {
       value++;
     }
 
+    var img = new Image();
+    img.src = canvasContent.toDataURL();
+    img.width = "128";
+    img.height = "256";
+    document.body.appendChild(img);
     return () => {};
   }, []);
 
