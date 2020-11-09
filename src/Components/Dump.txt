@@ -1,0 +1,409 @@
+import React, { useRef, useEffect, useLayoutEffect } from "react";
+
+function Codetest1() {
+ 
+
+    const myCanvas = useRef(null);
+  
+
+  useLayoutEffect(() => {
+    
+    
+      return () => {
+           
+      };
+  }, [ ])
+
+  useEffect(() => {
+
+    
+
+  const canvasContent = myCanvas.current;
+    const context = canvasContent.getContext("2d");
+    context.canvas.width  = window.innerWidth;
+    context.canvas.height = window.innerHeight;
+    let color=0;
+    let getdublicates=[];
+      for (let column = 0; column < 256; column++) {
+      for (let row = 0; row < 256; row++) {
+         
+        
+          var x = Math.floor(Math.random() * 200);
+          var y = Math.floor(Math.random() * 200);
+          var z = Math.floor(Math.random() * 200);
+
+       
+
+          console.log("rgb(" + x + "," + y + "," + z + ")");
+          getdublicates.push({r:parseInt(x),g:parseInt(y),b:parseInt(z)});
+
+          context.fillStyle="rgb(" + x + "," + y + "," + z + ")";
+          // context.fillStyle = 'hsl('+color+',100%,50%)';
+           context.fillRect(column * 20, row * 20, 20, 20);
+          color += 8;
+         
+      }
+    } 
+
+    //console.log("check duplicates"+getdublicates.length);
+    //console.log(JSON.stringify(getdublicates))
+    
+
+    return () => {};
+  }, []);
+  return (
+    <div>
+      <div>
+        <canvas ref={myCanvas} ></canvas>
+      </div>
+    </div>
+  );
+}
+
+export default Codetest1;
+import React, { useRef, useEffect, useLayoutEffect } from "react";
+
+function CodeChallange() {
+  const myCanvas = useRef(null);
+  const colorCodes = [];
+  const getPermutations = [];
+  let allPossibleCases;
+
+  useEffect(() => {
+    const number = 8;
+
+    /* let number=8;
+
+    for (let i = 1; i <= 32; i++) {
+      console.log("8 multiplication")
+      let result = i * number;
+      console.log(`${number} * ${i} = ${result}`);
+
+    }*/
+    for (let step = 0; step <= 3; step++) {
+      for (let i = 1; i <= 32; i++) {
+        let result = i * number;
+        if (step === 1) {
+          // colorCodes.push({ red: result, green: 8, blue: 8 });
+          getPermutations.push([result, 8, 8]);
+        }
+        if (step === 2) {
+          if (result === 8) {
+          } else {
+            // colorCodes.push({ red: 8, green: result, blue: 8 });
+            colorCodes.push({ red: 8, green: result, blue: 8 });
+            getPermutations.push([8, result, 8]);
+          }
+        }
+        if (step === 3) {
+          if (result === 8) {
+          } else {
+            // colorCodes.push({ red: 8, green: 8, blue: result });
+            colorCodes.push({ red: 8, green: 8, blue: result });
+            getPermutations.push([8, 8, result]);
+          }
+        }
+      }
+
+      // console.log("colorCodes"+JSON.stringify(colorCodes));
+      // console.log("Color-Codes"+colorCodes.length);
+    }
+    // console.log("Full Color Codes"+JSON.stringify(colorCodes));
+    //console.log("full Color-length"+colorCodes.length);
+    // const entries = Object.entries(colorCodes);
+    //console.log("entries"+JSON.stringify(entries));
+
+    const canvasContent = myCanvas.current;
+    const context = canvasContent.getContext("2d");
+    context.canvas.width = window.innerWidth;
+    context.canvas.height = window.innerHeight;
+    let color = 0;
+    let getdublicates = [];
+    for (let column = 0; column < 256; column++) {
+      for (let row = 0; row < 128; row++) {
+        var x = Math.floor(Math.random() * 256);
+        var y = Math.floor(Math.random() * 256);
+        var z = Math.floor(Math.random() * 256);
+        // console.log("rgb(" + x + "," + y + "," + z + ")");
+        getdublicates.push({ r: parseInt(x), g: parseInt(y), b: parseInt(z) });
+        context.fillStyle = "rgb(" + x + "," + y + "," + z + ")";
+
+        context.fillRect(column * 20, row * 20, 20, 20);
+        color += 8;
+      }
+    }
+
+    //console.log(" hhhhh check duplicates"+getdublicates.length);
+    //console.log(JSON.stringify(getdublicates))
+    //console.log("get the permutaions" + JSON.stringify(getPermutations));  
+
+     const colorCombinations = allPossibleCases(getPermutations);
+
+     console.log(JSON.stringify(colorCombinations));
+
+    return () => {};
+  }, []);
+
+  useLayoutEffect(() => {
+    let recursive = 0;
+     allPossibleCases = (arr) => {
+      recursive++;
+      if (arr.length == 1) {
+        return arr[0];
+      } else {
+        var result = [];
+        var allCasesOfRest = allPossibleCases(arr.slice(1));  // recur with the rest of array
+        for (var i = 0; i < allCasesOfRest.length; i++) {
+          for (var j = 0; j < arr[0].length; j++) {
+            result.push(arr[0][j] + allCasesOfRest[i]);
+            recursive++;
+          }
+          recursive++;
+        }
+        return result;
+      }
+
+    }
+
+    return () => {
+
+    };
+  }, [])
+
+  return (
+    <div>
+      <div>
+        <canvas ref={myCanvas}></canvas>
+      </div>
+    </div>
+  );
+}
+
+export default CodeChallange;
+import React, { useRef, useEffect, useState } from "react";
+
+const Canvas = (props) => {
+  //alert(JSON.stringify(props));
+
+  const myCanvas = useRef(null);
+
+  const number = 8;
+
+
+  for (let step = 0; step < 3; step++) {
+    for (let i = 1; i <= 32; i++) {
+      if (step == 1) {
+        console.log(
+          "111111111111111111------------Walking east one step" + step
+        );
+      }
+      if (step == 2) {
+        console.log(
+          "22222222222222222222--------------Walking east one step" + step
+        );
+      }
+      if (step == 3) {
+        console.log(
+          "333333333333333333333-------------Walking east one step" + step
+        );
+      }
+      const result = i * number;
+      console.log(`${number} * ${i} = ${result}`);
+    }
+  }
+    
+  //console.log("data"+setTableData);
+
+  useEffect(() => {
+    const canvasContent = myCanvas.current;
+    const context = canvasContent.getContext("2d");
+
+    for (let step = 0; step < 3; step++) {
+        for (let i = 1; i <= 32; i++) {
+            const result = i * number;
+            console.log(`${number} * ${i} = ${result}`);
+          if (step === 1) {
+            context.fillStyle = "rgb(" + result+ ",8,8)";
+            context.fillRect(10, 10, 100, 100);
+            console.log(
+              "111111111111111111------------Walking east one step" + step
+            );
+          }
+          if (step === 2) {
+            context.fillStyle = "rgb(8,"+ result+",8)";
+            context.fillRect(10, 10, 100, 100);
+            console.log(
+              "22222222222222222222--------------Walking east one step" + step
+            );
+          }
+          if (step === 3) {
+            context.fillStyle = "rgb(8,8,"+ result+")";
+           // context.fillStyle = "rgb(" + i * i + ", " + j * j + ", 0)";
+            context.fillRect(10, 10, 100, 100);
+            console.log(
+              "333333333333333333333-------------Walking east one step" + step
+            );
+          }
+         
+        }
+      }
+
+
+
+    //context.fillStyle = 'rgb(219,178,178)';
+
+    //  context.fillStyle='rgb(219,178,178)'
+    /*for (var i = 0; i < 256; i++) {
+        for (var j = 0; j < 256; j++) {
+          
+            for (var k = 0; k< 256; k++) {
+                context.fillStyle = 'rgb(' + i* i + ', ' + j *j + ', ' + k *k + ')';
+                //context.fillStyle = 'rgb(219,178,178)';
+                context.fillRect(10, 10, 100, 100);
+            }
+        }
+      }*/
+      for (var i = 0; i < 32; i++) {
+        for (var j = 0; j < 32; j++) {
+          context.fillStyle = 'rgb(' + Math.floor(255 - 42.5 * i) + ', ' +
+                           Math.floor(255 - 42.5 * j) + ', 0)';
+                           context.fillRect(10, 10, 25, 25);
+        }
+      }
+  }, []);
+
+  return (
+    <div>
+      <canvas ref={myCanvas} width="200" height="100"></canvas>
+    </div>
+  );
+};
+
+export default Canvas;
+
+
+                  
+                
+/*if (step === 1) {
+  //context.fillStyle = "rgb(" +  result  + "," +  Math.floor(Math.random() * result) + "," +  Math.floor(Math.random() * result)  + ")";
+  //console.log( "step 1"+"rgb(" +  result  + "," +  Math.floor(Math.random() * result)   + "," + Math.floor(Math.random() * result)  + ")");
+
+// checkDublicates.push({r:result,g:Math.floor(Math.random() * result),b:Math.floor(Math.random() * result)});
+ }
+ if (step === 2) {
+   if (result === 8) {
+   } else {
+    // context.fillStyle = "rgb(" +   Math.floor(Math.random() * result)   + "," + result + "," + Math.floor(Math.random() * result)  + ")";
+    // console.log( "step 2"+"rgb(" +   Math.floor(Math.random() * result)   + "," + result + "," +Math.floor(Math.random() * result) + ")");
+     //checkDublicates.push({r:Math.floor(Math.random() * result),g:result,b:Math.floor(Math.random() * result)});
+   }
+ }
+ if (step === 3) {
+   if (result === 8) {
+   } else {
+     //context.fillStyle = "rgb(" +   Math.floor(Math.random() * result)   + "," + Math.floor(Math.random() * result) + "," + result + ")";
+    // console.log( "step 3"+"rgb(" +   Math.floor(Math.random() * result)    + "," + Math.floor(Math.random() * result)  + "," + result + ")");
+     //checkDublicates.push({r:Math.floor(Math.random() * result),g:Math.floor(Math.random() * result),b:result});
+   }
+ }*/
+
+ import React, { useRef, useEffect, useState } from "react";
+
+const Canvas = (props) => {
+  //alert(JSON.stringify(props));
+
+  const myCanvas = useRef(null);
+
+  const number = 8;
+
+
+  for (let step = 0; step < 3; step++) {
+    for (let i = 1; i <= 32; i++) {
+      if (step == 1) {
+        console.log(
+          "111111111111111111------------Walking east one step" + step
+        );
+      }
+      if (step == 2) {
+        console.log(
+          "22222222222222222222--------------Walking east one step" + step
+        );
+      }
+      if (step == 3) {
+        console.log(
+          "333333333333333333333-------------Walking east one step" + step
+        );
+      }
+      const result = i * number;
+      console.log(`${number} * ${i} = ${result}`);
+    }
+  }
+    
+  //console.log("data"+setTableData);
+
+  useEffect(() => {
+    const canvasContent = myCanvas.current;
+    const context = canvasContent.getContext("2d");
+
+    for (let step = 0; step < 3; step++) {
+        for (let i = 1; i <= 32; i++) {
+            const result = i * number;
+            console.log(`${number} * ${i} = ${result}`);
+          if (step === 1) {
+            context.fillStyle = "rgb(" + result+ ",8,8)";
+            context.fillRect(10, 10, 100, 100);
+            console.log(
+              "111111111111111111------------Walking east one step" + step
+            );
+          }
+          if (step === 2) {
+            context.fillStyle = "rgb(8,"+ result+",8)";
+            context.fillRect(10, 10, 100, 100);
+            console.log(
+              "22222222222222222222--------------Walking east one step" + step
+            );
+          }
+          if (step === 3) {
+            context.fillStyle = "rgb(8,8,"+ result+")";
+           // context.fillStyle = "rgb(" + i * i + ", " + j * j + ", 0)";
+            context.fillRect(10, 10, 100, 100);
+            console.log(
+              "333333333333333333333-------------Walking east one step" + step
+            );
+          }
+         
+        }
+      }
+
+
+
+    //context.fillStyle = 'rgb(219,178,178)';
+
+    //  context.fillStyle='rgb(219,178,178)'
+    /*for (var i = 0; i < 256; i++) {
+        for (var j = 0; j < 256; j++) {
+          
+            for (var k = 0; k< 256; k++) {
+                context.fillStyle = 'rgb(' + i* i + ', ' + j *j + ', ' + k *k + ')';
+                //context.fillStyle = 'rgb(219,178,178)';
+                context.fillRect(10, 10, 100, 100);
+            }
+        }
+      }*/
+      for (var i = 0; i < 32; i++) {
+        for (var j = 0; j < 32; j++) {
+          context.fillStyle = 'rgb(' + Math.floor(255 - 42.5 * i) + ', ' +
+                           Math.floor(255 - 42.5 * j) + ', 0)';
+                           context.fillRect(10, 10, 25, 25);
+        }
+      }
+  }, []);
+
+  return (
+    <div>
+      <canvas ref={myCanvas} width="200" height="100"></canvas>
+    </div>
+  );
+};
+
+export default Canvas;
